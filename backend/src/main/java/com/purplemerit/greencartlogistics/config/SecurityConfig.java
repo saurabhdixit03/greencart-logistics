@@ -63,24 +63,24 @@ public class SecurityConfig {
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        return http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> 
-                auth.requestMatchers("/api/auth/**").permitAll()
+                auth.requestMatchers("/api/auth/intialize")
+                        .requestMatchers("/api/auth/signin")
+                        .requestMatchers("/api/auth/debug")
+                    .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/api-docs/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/swagger-ui.html").permitAll()
                     .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/error")
                     .anyRequest().authenticated()
-            );
-        
-        http.authenticationProvider(authenticationProvider());
-        
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        
-        return http.build();
+                        .authenticationProvider(authenticationProvider())
+                        .addFilterBefore(authenticationJwtTokenFilter(),UsernamePasswordAuthenticationFilter.class)
+                        .build();
     }
     
     @Bean
@@ -90,6 +90,11 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://greencart-logistics-1-3fn4.onrender.com",
+                "https://*vercel.com"
+        ))
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
