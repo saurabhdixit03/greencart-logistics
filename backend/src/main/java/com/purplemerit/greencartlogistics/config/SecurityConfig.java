@@ -60,29 +60,30 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> 
-                auth.requestMatchers("/api/auth/intialize")
-                        .requestMatchers("/api/auth/signin")
-                        .requestMatchers("/api/auth/debug")
-                    .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/api-docs/**").permitAll()
-                    .requestMatchers("/swagger-ui/**").permitAll()
-                    .requestMatchers("/swagger-ui.html").permitAll()
-                    .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/error")
-                    .anyRequest().authenticated()
-                        .authenticationProvider(authenticationProvider())
-                        .addFilterBefore(authenticationJwtTokenFilter(),UsernamePasswordAuthenticationFilter.class)
-                        .build();
+                .csrf(csrf -> csrf.disable())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers("/api/auth/intialize")
+                                .requestMatchers("/api/auth/signin")
+                                .requestMatchers("/api/auth/debug")
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api-docs/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/swagger-ui.html").permitAll()
+                                .requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers("/error")
+                                .anyRequest().authenticated()
+                                .authenticationProvider(authenticationProvider())
+                                .addFilterBefore(authenticationJwtTokenFilter(),UsernamePasswordAuthenticationFilter.class)
+                                .build();
     }
-    
+
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
