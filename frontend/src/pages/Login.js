@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { TruckIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { TruckIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/outline';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Login = () => {
@@ -65,30 +65,24 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Demo credentials */}
+        {/* Demo login buttons - credentials hidden */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="text-sm font-medium text-blue-800 mb-2">Demo Credentials:</h3>
-          <div className="space-y-2 text-xs text-blue-700">
-            <div className="flex justify-between items-center">
-              <span>Manager: manager / manager123</span>
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('manager')}
-                className="text-blue-600 hover:text-blue-800 underline"
-              >
-                Use
-              </button>
-            </div>
-            <div className="flex justify-between items-center">
-              <span>Admin: admin / admin123</span>
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('admin')}
-                className="text-blue-600 hover:text-blue-800 underline"
-              >
-                Use
-              </button>
-            </div>
+          <h3 className="text-sm font-medium text-blue-800 mb-2">Quick Login:</h3>
+          <div className="flex space-x-2">
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('manager')}
+              className="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Login as Manager
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('admin')}
+              className="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Login as Admin
+            </button>
           </div>
         </div>
 

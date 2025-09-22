@@ -11,7 +11,7 @@ import {
   CurrencyRupeeIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon
-} from '@heroicons/react/24/outline';
+} from '@heroicons/react/outline';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Orders = () => {
