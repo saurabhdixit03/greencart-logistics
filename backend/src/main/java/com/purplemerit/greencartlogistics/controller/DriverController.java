@@ -28,21 +28,18 @@ public class DriverController {
     private DriverRepository driverRepository;
     
     @GetMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get all drivers", description = "Retrieve all drivers in the system")
     public List<Driver> getAllDrivers() {
         return driverRepository.findAll();
     }
     
     @GetMapping("/active")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get active drivers", description = "Retrieve all active drivers")
     public List<Driver> getActiveDrivers() {
         return driverRepository.findByIsActiveTrue();
     }
     
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get driver by ID", description = "Retrieve a specific driver by ID")
     public ResponseEntity<Driver> getDriverById(@PathVariable String id) {
         Optional<Driver> driver = driverRepository.findById(id);
@@ -51,14 +48,12 @@ public class DriverController {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Create driver", description = "Create a new driver")
     public Driver createDriver(@Valid @RequestBody Driver driver) {
         return driverRepository.save(driver);
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Update driver", description = "Update an existing driver")
     public ResponseEntity<Driver> updateDriver(@PathVariable String id, @Valid @RequestBody Driver driverDetails) {
         Optional<Driver> optionalDriver = driverRepository.findById(id);
@@ -78,7 +73,6 @@ public class DriverController {
     }
     
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Delete driver", description = "Delete a driver (soft delete by setting inactive)")
     public ResponseEntity<?> deleteDriver(@PathVariable String id) {
         Optional<Driver> optionalDriver = driverRepository.findById(id);
@@ -94,7 +88,6 @@ public class DriverController {
     }
     
     @GetMapping("/count")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get driver count", description = "Get count of active drivers")
     public ResponseEntity<Long> getActiveDriverCount() {
         long count = driverRepository.countByIsActiveTrue();

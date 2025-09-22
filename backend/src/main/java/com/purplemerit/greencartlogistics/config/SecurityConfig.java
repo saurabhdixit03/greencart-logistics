@@ -26,9 +26,9 @@ import java.util.Arrays;
 /**
  * Security configuration for JWT authentication
  */
-@Configuration
-@EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+//@Configuration
+//@EnableWebSecurity
+//@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -69,8 +69,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/initialize").permitAll()
-                                .requestMatchers("/api/auth/signin").permitAll()
-                                .requestMatchers("/api/auth/debug").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("v3/api-docs/**").permitAll()
                                 .requestMatchers("/api/auth/test-user").permitAll()
                                 .requestMatchers("/api/auth/reset-users").permitAll()
                                 .requestMatchers("/api-docs/**").permitAll()

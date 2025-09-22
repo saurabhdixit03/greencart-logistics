@@ -28,21 +28,18 @@ public class RouteController {
     private RouteRepository routeRepository;
     
     @GetMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get all routes", description = "Retrieve all routes in the system")
     public List<Route> getAllRoutes() {
         return routeRepository.findAll();
     }
     
     @GetMapping("/active")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get active routes", description = "Retrieve all active routes")
     public List<Route> getActiveRoutes() {
         return routeRepository.findByIsActiveTrue();
     }
     
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get route by ID", description = "Retrieve a specific route by ID")
     public ResponseEntity<Route> getRouteById(@PathVariable String id) {
         Optional<Route> route = routeRepository.findById(id);
@@ -51,7 +48,6 @@ public class RouteController {
     }
     
     @GetMapping("/route/{routeId}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get route by route ID", description = "Retrieve a specific route by route ID")
     public ResponseEntity<Route> getRouteByRouteId(@PathVariable String routeId) {
         Optional<Route> route = routeRepository.findByRouteId(routeId);
@@ -60,14 +56,12 @@ public class RouteController {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Create route", description = "Create a new route")
     public Route createRoute(@Valid @RequestBody Route route) {
         return routeRepository.save(route);
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Update route", description = "Update an existing route")
     public ResponseEntity<Route> updateRoute(@PathVariable String id, @Valid @RequestBody Route routeDetails) {
         Optional<Route> optionalRoute = routeRepository.findById(id);
@@ -89,7 +83,6 @@ public class RouteController {
     }
     
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Delete route", description = "Delete a route (soft delete by setting inactive)")
     public ResponseEntity<?> deleteRoute(@PathVariable String id) {
         Optional<Route> optionalRoute = routeRepository.findById(id);
@@ -105,7 +98,6 @@ public class RouteController {
     }
     
     @GetMapping("/traffic/{level}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get routes by traffic level", description = "Retrieve routes by traffic level")
     public List<Route> getRoutesByTrafficLevel(@PathVariable String level) {
         return routeRepository.findByTrafficLevel(level);

@@ -28,14 +28,12 @@ public class OrderController {
     private OrderRepository orderRepository;
     
     @GetMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get all orders", description = "Retrieve all orders in the system")
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
     
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get order by ID", description = "Retrieve a specific order by ID")
     public ResponseEntity<Order> getOrderById(@PathVariable String id) {
         Optional<Order> order = orderRepository.findById(id);
@@ -44,7 +42,6 @@ public class OrderController {
     }
     
     @GetMapping("/order/{orderId}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get order by order ID", description = "Retrieve a specific order by order ID")
     public ResponseEntity<Order> getOrderByOrderId(@PathVariable String orderId) {
         Optional<Order> order = orderRepository.findByOrderId(orderId);
@@ -53,14 +50,12 @@ public class OrderController {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Create order", description = "Create a new order")
     public Order createOrder(@Valid @RequestBody Order order) {
         return orderRepository.save(order);
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Update order", description = "Update an existing order")
     public ResponseEntity<Order> updateOrder(@PathVariable String id, @Valid @RequestBody Order orderDetails) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
@@ -88,7 +83,6 @@ public class OrderController {
     }
     
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Delete order", description = "Delete an order")
     public ResponseEntity<?> deleteOrder(@PathVariable String id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
@@ -102,28 +96,24 @@ public class OrderController {
     }
     
     @GetMapping("/status/{status}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get orders by status", description = "Retrieve orders by status")
     public List<Order> getOrdersByStatus(@PathVariable Order.OrderStatus status) {
         return orderRepository.findByStatus(status);
     }
     
     @GetMapping("/driver/{driverId}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get orders by driver", description = "Retrieve orders assigned to a specific driver")
     public List<Order> getOrdersByDriver(@PathVariable String driverId) {
         return orderRepository.findByAssignedDriverId(driverId);
     }
     
     @GetMapping("/route/{routeId}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get orders by route", description = "Retrieve orders assigned to a specific route")
     public List<Order> getOrdersByRoute(@PathVariable String routeId) {
         return orderRepository.findByAssignedRouteId(routeId);
     }
     
     @GetMapping("/stats/delivery-performance")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get delivery performance stats", description = "Get on-time vs late delivery statistics")
     public ResponseEntity<?> getDeliveryPerformanceStats() {
         long onTimeDeliveries = orderRepository.countByIsDeliveredOnTime(true);

@@ -35,7 +35,6 @@ public class SimulationController {
     private SimulationService simulationService;
     
     @PostMapping("/run")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Run simulation", description = "Run delivery simulation with specified parameters")
     public ResponseEntity<?> runSimulation(@Valid @RequestBody SimulationRequest request, 
                                          Authentication authentication) {
@@ -73,7 +72,6 @@ public class SimulationController {
     }
     
     @GetMapping("/history")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get simulation history", description = "Retrieve all simulation results")
     public ResponseEntity<List<SimulationResult>> getSimulationHistory() {
         try {
@@ -86,7 +84,6 @@ public class SimulationController {
     }
     
     @GetMapping("/history/my")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get my simulation history", description = "Retrieve simulation results for current user")
     public ResponseEntity<List<SimulationResult>> getMySimulationHistory(Authentication authentication) {
         try {
@@ -100,7 +97,6 @@ public class SimulationController {
     }
     
     @GetMapping("/latest")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get latest simulation", description = "Retrieve the most recent simulation result")
     public ResponseEntity<SimulationResult> getLatestSimulation() {
         try {
@@ -117,7 +113,6 @@ public class SimulationController {
     }
     
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @Operation(summary = "Get simulation by ID", description = "Retrieve a specific simulation result by ID")
     public ResponseEntity<SimulationResult> getSimulationById(@PathVariable String id) {
         try {
