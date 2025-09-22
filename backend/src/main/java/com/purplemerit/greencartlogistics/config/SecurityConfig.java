@@ -63,25 +63,27 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/intialize")
-                                .requestMatchers("/api/auth/signin")
-                                .requestMatchers("/api/auth/debug")
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api-docs/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/swagger-ui.html").permitAll()
-                                .requestMatchers("/actuator/**").permitAll()
-                                .requestMatchers("/error")
-                                .anyRequest().authenticated()
-                                .authenticationProvider(authenticationProvider())
-                                .addFilterBefore(authenticationJwtTokenFilter(),UsernamePasswordAuthenticationFilter.class)
-                                .build();
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/intialize", "/api/auth/signin", "/api/auth/debug").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider());
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
+
 
 
     @Bean
@@ -95,7 +97,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
                 "https://greencart-logistics-1-3fn4.onrender.com",
                 "https://*vercel.com"
-        ))
+        ));
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
