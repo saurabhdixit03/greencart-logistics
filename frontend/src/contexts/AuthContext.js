@@ -66,17 +66,19 @@ export const AuthProvider = ({ children }) => {
       });
 
       console.log('Login response:', response.data);
-      const { token, ...userData } = response.data;
 
-      if (!token) {
+      // Backend sends jwt, not token
+      const { jwt, ...userData } = response.data;
+
+      if (!jwt) {
         throw new Error('No token received from server');
       }
 
-      setToken(token);
+      setToken(jwt);
       setUser(userData);
 
       // Save to localStorage
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', jwt);
       localStorage.setItem('user', JSON.stringify(userData));
 
       toast.success('Login successful!');
