@@ -55,56 +55,50 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (username, password) => {
-    try {
-      setLoading(true);
-      console.log('Attempting login to:', API_BASE_URL + '/auth/signin');
+const login = async (username, password) => {
+  try {
+    setLoading(true);
+    console.log('Attempting login to:', API_BASE_URL + '/auth/signin');
 
-      const response = await axios.post('/auth/signin', {
-        username,
-        password,
-      });
+    const response = await axios.post('/auth/signin', { username, password });
+    console.log('Login response:', response.data);
 
-      console.log('Login response:', response.data);
+    // Use the correct field from backend
+    const { accessToken, ...userData } = response.data;
 
-      // Backend sends jwt, not token
-      const { jwt, ...userData } = response.data;
-
-      if (!jwt) {
-        throw new Error('No token received from server');
-      }
-
-      setToken(jwt);
-      setUser(userData);
-
-      // Save to localStorage
-      localStorage.setItem('token', jwt);
-      localStorage.setItem('user', JSON.stringify(userData));
-
-      toast.success('Login successful!');
-      return { success: true };
-
-    } catch (error) {
-      console.error('Login error:', error);
-      console.error('Error response:', error.response?.data);
-
-      let message = 'Login failed';
-      if (error.response?.data?.message) {
-        message = error.response.data.message;
-      } else if (error.response?.status === 401) {
-        message = 'Invalid username or password';
-      } else if (error.response?.status === 0) {
-        message = 'Cannot connect to server';
-      } else if (error.message) {
-        message = error.message;
-      }
-
-      toast.error(message);
-      return { success: false, error: message };
-    } finally {
-      setLoading(false);
+    if (!accessToken) {
+      throw new Error('No token received from server');
     }
-  };
+
+    setToken(accessToken);
+    setUser(userData);
+
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('user', JSON.stringify(userData));
+
+    toast.success('Login successful!');
+    return { success: true };
+  } catch (error) {
+    console.error('Login error:', error);
+    console.error('Error response:', error.response?.data);
+
+    let message = 'Login failed';
+    if (error.response?.data?.message) {
+      message = error.response.data.message;
+    } else if (error.response?.status === 401) {
+      message = 'Invalid username or password';
+    } else if (error.response?.status === 0) {
+      message = 'Cannot connect to server';
+    } else if (error.message) {
+      message = error.message;
+    }
+
+    toast.error(message);
+    return { success: false, error: message };
+  } finally {
+    setLoading(false);
+  }
+};
 
   const logout = () => {
     setUser(null);
