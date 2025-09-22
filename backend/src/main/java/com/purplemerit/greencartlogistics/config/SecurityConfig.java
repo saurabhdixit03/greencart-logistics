@@ -27,7 +27,7 @@ import java.util.Arrays;
  * Security configuration for JWT authentication - TEMPORARILY DISABLED
  */
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 //@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     
@@ -67,18 +67,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> 
-                auth.requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/api-docs/**").permitAll()
-                    .requestMatchers("/swagger-ui/**").permitAll()
-                    .requestMatchers("/swagger-ui.html").permitAll()
-                    .requestMatchers("/v3/api-docs/**").permitAll()
-                    .requestMatchers("/actuator/**").permitAll()
-                    .requestMatchers("/error").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
             .build();
     }
     
