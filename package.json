@@ -1,0 +1,20 @@
+{
+  "name": "greencart-logistics",
+  "version": "1.0.0",
+  "description": "GreenCart Logistics - Delivery Simulation & KPI Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "test": "cd backend && npm test",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "keywords": ["logistics", "delivery", "simulation", "dashboard"],
+  "author": "Purple Merit Technologies",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
