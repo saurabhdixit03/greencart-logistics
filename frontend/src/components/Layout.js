@@ -60,7 +60,7 @@ const Layout = ({ children }) => {
             className="lg:hidden text-white hover:text-primary-200"
             onClick={() => setSidebarOpen(false)}
           >
-            <XMarkIcon className="w-6 h-6" />
+            <XCircleIcon className="w-6 h-6" />
           </button>
         </div>
 
