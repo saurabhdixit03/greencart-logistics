@@ -19,8 +19,8 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOriginPatterns("*")
                         .allowedOrigins(
-                            "http://localhost:3000",
-                            "https://localhost:3000"
+                            "https://greencart-logistics-1-3fn4.onrender.com/",
+                            "https://greencart-logistics-1-3fn4.onrender.com/"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
