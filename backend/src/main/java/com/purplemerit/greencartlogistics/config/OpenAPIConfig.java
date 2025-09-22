@@ -29,7 +29,7 @@ public class OpenAPIConfig {
         return new OpenAPI()
             .servers(List.of(
                 new Server().url("http://localhost:8080").description("Local Development Server"),
-                new Server().url("https://your-app.herokuapp.com").description("Production Server")
+                new Server().url("https://greencart-logistics-1-3fn4.onrender.com").description("Production Server")
             ))
             .info(new Info()
                 .title("GreenCart Logistics API")
