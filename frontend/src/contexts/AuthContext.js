@@ -35,11 +35,11 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       const savedToken = localStorage.getItem('token');
       const savedUser = localStorage.getItem('user');
-      
+
       if (savedToken && savedUser) {
         setToken(savedToken);
         setUser(JSON.parse(savedUser));
-        
+
         // Validate token with backend
         try {
           await axios.get('/auth/validate');
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
           logout();
         }
       }
-      
+
       setLoading(false);
     };
 

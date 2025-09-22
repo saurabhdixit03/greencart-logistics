@@ -71,6 +71,8 @@ public class SecurityConfig {
                         auth.requestMatchers("/api/auth/initialize").permitAll()
                                 .requestMatchers("/api/auth/signin").permitAll()
                                 .requestMatchers("/api/auth/debug").permitAll()
+                                .requestMatchers("/api/auth/test-user").permitAll()
+                                .requestMatchers("/api/auth/reset-users").permitAll()
                                 .requestMatchers("/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/swagger-ui.html").permitAll()
@@ -90,9 +92,9 @@ public class SecurityConfig {
         // Allow all origins for development and production
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedOrigins(Arrays.asList(
-                "http://localhost:3000",
-                "https://localhost:3000",
-                "https://your-vercel-app.vercel.app"
+                "https://greencart-logistics-1-3fn4.onrender.com",
+                "https://greencart-logistics-1-3fn4.onrender.com",
+                "https://vercel.com/saurabh-dixits-projects/greencart-logistics/*"
         ));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));

@@ -8,7 +8,7 @@ import {
   ClockIcon,
   ExclamationTriangleIcon,
   CheckCircleIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, Legend

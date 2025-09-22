@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { 
   Bars3Icon, 
-  XMarkIcon,
+  XCircleIcon,
   HomeIcon,
   PlayIcon,
   TruckIcon,
@@ -10,7 +10,7 @@ import {
   ShoppingBagIcon,
   UserCircleIcon,
   ArrowRightOnRectangleIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
 
 const Layout = ({ children }) => {
